@@ -26,13 +26,15 @@
 export function flattenProducts(data) {
   const flatData = [];
   data.data.forEach((item) => {
+    let { url } = item.attributes.image.data.attributes;
+    console.log(url);
     const flatItem = {
       id: item.id,
       title: item.attributes.title,
       price: item.attributes.price,
       description: item.attributes.description,
       featured: item.attributes.featured,
-      image: item.attributes.image.data.attributes.url,
+      image: url,
       category: item.attributes.category,
       shipping: item.attributes.free_shipping,
     };

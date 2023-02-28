@@ -28,17 +28,38 @@ export default function ProductProvider({ children }) {
     price: "all",
   });
 
+  // React.useEffect(() => {
+  //   setLoading(true);
+  //   axios.get(`${url}/api/products?populate=*`).then((response) => {
+  //     const features = featuredProducts(flattenProducts(response.data));
+  //     const products = flattenProducts(response.data);
+  //     setSorted(paginate(products));
+  //     setProducts(products);
+  //     setFeatured(features);
+  //     setLoading(false);
+  //   });
+
+  //   return () => {};
+  // }, []);
   React.useEffect(() => {
     setLoading(true);
-    axios.get(`${url}/api/products?populate=*`).then((response) => {
-      const features = featuredProducts(flattenProducts(response.data));
-      const products = flattenProducts(response.data);
-      setSorted(paginate(products));
-      setProducts(products);
-      setFeatured(features);
-      setLoading(false);
-    });
+    async function getProduct() {
+      try {
+        const res = await axios.get(`${url}/api/products?populate=*`);
+        const features = featuredProducts(flattenProducts(res.data));
+        const products = flattenProducts(res.data);
+        setSorted(paginate(products));
+        setProducts(products);
+        setFeatured(features);
+        setLoading(false);
+        console.log(res.data);
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
+    }
 
+    getProduct();
     return () => {};
   }, []);
 
