@@ -25,16 +25,22 @@
 
 export function flattenProducts(data) {
   const flatData = [];
+
   data.data.forEach((item) => {
-    let { url } = item.attributes.image.data.attributes;
-    console.log(url);
+    //  this code below is to flatten the image object so as not returning 'TypeError: Cannot read properties of null (reading 'attributes')' error if the user forgot to upload image
+    let image = item.attributes.image;
+    if (image && image.data && image.data.attributes) {
+      image = image.data.attributes.url; // Get the image URL
+    } else {
+      image = null; // Provide a default image URL if the original image URL is null or undefined
+    }
     const flatItem = {
       id: item.id,
       title: item.attributes.title,
       price: item.attributes.price,
       description: item.attributes.description,
       featured: item.attributes.featured,
-      image: url,
+      image: image,
       category: item.attributes.category,
       shipping: item.attributes.free_shipping,
     };

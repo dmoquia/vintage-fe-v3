@@ -2,9 +2,8 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ProductContext } from "../context/products";
 import { CartContext } from "../context/cart";
-
 import Loading from "../components/Loading";
-
+import img from "../assets/mainBcg.jpeg";
 export default function ProductDetails() {
   const { id } = useParams();
   // const history = useHistory();
@@ -21,7 +20,7 @@ export default function ProductDetails() {
     return (
       <section className="single-product">
         <img
-          src={image}
+          src={image || img}
           alt={title}
           className="signle-product-image decoration-remove"
         />
